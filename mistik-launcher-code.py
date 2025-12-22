@@ -9,6 +9,7 @@ import shutil
 from PIL import Image
 import zipfile
 import sys
+import ctypes
 
 # En lugar de ctk.set_default_color_theme("orange")
 ctk.set_appearance_mode("Dark")
@@ -195,8 +196,21 @@ class MistikLauncher(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        # ID único para que Windows mantenga el icono en la barra de tareas al mover el exe
+        try:
+            myappid = 'mistik.launcher.portable.v1'
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        except Exception:
+            pass
+
         self.title("Mistik Launcher - Portable Edition")
         self.geometry("800x500")
+
+        # Configurar icono de la ventana (asegúrate de tener 'icon.ico' en la carpeta assets)
+        try:
+            self.iconbitmap(resource_path("assets/icon.ico"))
+        except Exception:
+            pass # Si no encuentra el icono, usa el predeterminado
 
         # Título principal
         self.label_title = ctk.CTkLabel(self, text="Bienvenidos al Mistik Launcher ;)", font=("Comic Sans MS", 30, "bold"))
@@ -238,5 +252,4 @@ if __name__ == "__main__":
 
 #Pasar a .exe con:
 # python -m pip install pyinstaller
-# python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" --add-data "assets;assets" --collect-all customtkinter mistik-launcher-code.py
-
+# python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" --icon "assets/icon.ico" --add-data "assets;assets" --collect-all customtkinter mistik-launcher-code.py
