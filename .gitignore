@@ -1,0 +1,19 @@
+# --- Lo que tú pediste (Carpetas pesadas/ilegales) ---
+emulators/
+games/
+library/
+user/
+assets/big_shot_mineers.mp3
+
+# --- Basura automática de Python (No sirve para nada subir esto) ---
+__pycache__/
+*.pyc
+
+# --- Archivos de compilación (Cuando crees el .exe) ---
+build/
+dist/
+*.spec
+
+# --- Archivos temporales o de sistema ---
+.DS_Store
+Thumbs.db
