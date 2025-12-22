@@ -238,5 +238,5 @@ if __name__ == "__main__":
 
 #Pasar a .exe con:
 # python -m pip install pyinstaller
-# python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" --add-data "assets;assets" --collect-all customtkinter prueba-gemini.py
+# python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" --add-data "assets;assets" --collect-all customtkinter mistik-launcher-code.py
 
