@@ -20,4 +20,4 @@ jobs:
           python-version: "3.x"
 
       - name: Check Python syntax
-        run: python -m py_compile mistik-launcher-code.py mistik-launcher-code-AC-EDITION.py .github/scripts/update_emulator_links.py
+        run: python -m py_compile mistik-launcher-code.py .github/scripts/update_emulator_links.py

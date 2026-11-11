@@ -14,7 +14,6 @@ EMULATORS = [
         "repo": "dolphin-emu/dolphin",
         "files": [
             "mistik-launcher-code.py",
-            "mistik-launcher-code-AC-EDITION.py",
         ],
         "pattern": re.compile(
             r"https://dl\.dolphin-emu\.org/releases/[^/\s]+/dolphin-[^/\s]+-x64\.7z"
@@ -29,7 +28,6 @@ EMULATORS = [
         "repo": "cemu-project/Cemu",
         "files": [
             "mistik-launcher-code.py",
-            "mistik-launcher-code-AC-EDITION.py",
         ],
         "pattern": re.compile(
             r"https://github\.com/cemu-project/Cemu/releases/download/[^/\s]+/cemu-[^/\s]+\.zip"
@@ -45,7 +43,6 @@ EMULATORS = [
         "repo": "azahar-emu/azahar",
         "files": [
             "mistik-launcher-code.py",
-            "mistik-launcher-code-AC-EDITION.py",
         ],
         "pattern": re.compile(
             r"https://github\.com/azahar-emu/azahar/releases/download/[^/\s]+/azahar-[^/\s]+\.zip"
