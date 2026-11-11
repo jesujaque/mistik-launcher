@@ -1,3 +1,4 @@
+
 # --- Lo que tú pediste (Carpetas pesadas/ilegales) ---
 emulators/
 games/
@@ -17,3 +18,12 @@ dist/
 # --- Archivos temporales o de sistema ---
 .DS_Store
 Thumbs.db
+
+# --- Ejecutables y Git Bloat --- 
+
+*.exe
+*.dll
+bin/
+build/
+dist/
+

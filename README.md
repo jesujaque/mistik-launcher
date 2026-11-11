@@ -114,6 +114,10 @@ mistik-launcher/
 ├── mistik-launcher-code-AC-EDITION.py  # Código fuente con sincronización en la nube
 ├── assets/                         # Imágenes de consolas y recursos
 ├── config/                         # Configuraciones y recursos auxiliares
+├── CODE_OF_CONDUCT.md              # Código de conducta
+├── CONTRIBUTING.md                 # Guía de contribución
+├── LICENSE                         # Licencia MIT
+├── SECURITY.md                     # Política de seguridad
 └── README.md
 ```
 
@@ -122,6 +126,12 @@ mistik-launcher/
 - El launcher no incluye juegos ni BIOS, ya que no se pueden distribuir de forma gratuita. Los usuarios deben obtener los juegos por sus canales oficiales.
 - Los emuladores se descargan a las carpetas indicadas dentro de la propia carpeta del proyecto (por ejemplo, `emulators/Dolphin`).
 - Si no sabes cómo funciona el emulador que deseas, se recomienda buscar un video en YouTube que lo explique.
+
+## Contribuir
+
+Si quieres contribuir al proyecto, por favor lee nuestro [código de conducta](CODE_OF_CONDUCT.md) y nuestra [guía de contribución](CONTRIBUTING.md).
+
+Si descubres una vulnerabilidad de seguridad, consulta nuestra [política de seguridad](SECURITY.md).
 
 ## Créditos
 
