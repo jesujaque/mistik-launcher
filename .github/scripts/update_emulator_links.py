@@ -77,11 +77,25 @@ EMULATORS = [
             f"https://stable.eden-emu.dev/{tag}/Eden-Windows-{tag}-amd64-msvc-standard.zip"
         ),
     },
+    {
+        "console": "Switch (Online)",
+        "emu": "Ryujinx Nextendo",
+        "api_url": "https://git.nextendo.network/api/v1/repos/NextendoNetwork/Ryujinx-Nextendo/releases",
+        "files": [
+            "mistik-launcher-code.py",
+        ],
+        "pattern": re.compile(
+            r"https://git\.nextendo\.network/NextendoNetwork/Ryujinx-Nextendo/releases/download/[^/\s]+/Nextendo-[^/\s]+-win-x64\.zip"
+        ),
+        "build_url": lambda tag: (
+            f"https://git.nextendo.network/NextendoNetwork/Ryujinx-Nextendo/releases/download/{tag}/Nextendo-{tag.lstrip('v')}-win-x64.zip"
+        ),
+    },
 ]
 
 
-def get_latest_tag_eden(api_url: str) -> str:
-    """Devuelve el tag de la ultima release desde la API de Forgejo/Gitea de Eden."""
+def get_latest_tag_forgejo(api_url: str) -> str:
+    """Devuelve el tag de la ultima release desde APIs compatibles con Forgejo/Gitea."""
     req = urllib.request.Request(api_url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=15) as response:
         data = json.loads(response.read().decode("utf-8"))
@@ -119,7 +133,7 @@ def main() -> None:
     for emulator in EMULATORS:
         try:
             if "api_url" in emulator:
-                tag = get_latest_tag_eden(emulator["api_url"])
+                tag = get_latest_tag_forgejo(emulator["api_url"])
             else:
                 tag = get_latest_tag(emulator["repo"])
             new_url = emulator["build_url"](tag)
