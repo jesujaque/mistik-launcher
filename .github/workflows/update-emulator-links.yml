@@ -1,0 +1,64 @@
+name: Update Emulator Links
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # Todos los lunes a las 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  update-emulator-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Update emulator download links
+        run: python .github/scripts/update_emulator_links.py
+
+      - name: Validate updated source
+        run: python -m py_compile mistik-launcher-code.py .github/scripts/update_emulator_links.py
+
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No se detectaron cambios en los enlaces de descarga."
+            exit 0
+          fi
+
+          branch="automation/emulator-links"
+          git checkout -B "$branch"
+          git add mistik-launcher-code.py
+          git commit -m "ci: actualizar enlaces de descarga de emuladores a la última release"
+          git push --force origin "$branch"
+
+          if [ "$(gh pr list --head "$branch" --state open --json number --jq 'length')" = "0" ]; then
+            gh pr create \
+              --base develop \
+              --head "$branch" \
+              --title "ci: actualizar enlaces de descarga de emuladores" \
+              --body "Actualización automática de los enlaces de descarga de los emuladores a la última release. Solo se mergea si pasa el check validate de CI."
+          fi
+
+          # Habilita el auto-merge en el repositorio para poder usarlo en el PR.
+          gh api -X PATCH "repos/$(gh repo view --json nameWithOwner --jq .nameWithOwner)" -F allow_auto_merge=true
+
+          # Auto-merge: el PR se mergea solo (squash) cuando el check `validate` de CI esté en verde.
+          gh pr merge "$branch" --auto --squash
+
+          # Los PR creados con GITHUB_TOKEN no disparan workflows: lanzamos CI sobre la rama.
+          gh workflow run ci.yml --ref "$branch"

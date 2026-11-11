@@ -1,5 +1,10 @@
 # Mistik Launcher
 
+[![CI](https://github.com/jesujaque/mistik-launcher/actions/workflows/ci.yml/badge.svg)](https://github.com/jesujaque/mistik-launcher/actions/workflows/ci.yml)
+[![Update Emulator Links](https://github.com/jesujaque/mistik-launcher/actions/workflows/update-emulator-links.yml/badge.svg)](https://github.com/jesujaque/mistik-launcher/actions/workflows/update-emulator-links.yml)
+
+**Mistik Launcher** es un launcher de emuladores de videojuegos que centraliza en una única interfaz gráfica el download, la instalación y la ejecución de los emuladores más populares, de forma automática y portable.
+
 ## Sobre el proyecto
 
 **Mistik Launcher** es un proyecto de software que busca reunir los emuladores de los videojuegos más populares en un mismo launcher.
@@ -29,22 +34,47 @@ Actualmente el launcher incluye tarjetas para los siguientes emuladores:
 |---|---|---|
 | Wii | Dolphin | ✅ Descargable e instalable |
 | Wii U | Cemu | ✅ Descargable e instalable |
-| Nintendo 3DS | Azahar | ✅ Descargable e instalable (con sincronización en la nube) |
+| Nintendo 3DS | Azahar | ✅ Descargable e instalable |
+| Nintendo Switch | Eden | ✅ Descargable e instalable |
 | PlayStation 1 | DuckStation | 🚧 En desarrollo |
 | PlayStation 2 | PCSX2 | 🚧 En desarrollo |
 | PSP | PPSSPP | 🚧 En desarrollo |
 
-## Cómo descargar e instalar:
+## Cómo adquirir y usar el launcher
 
-1. Descarga el archivo "MistikLauncher.exe"
-2. Ejecutalo en la carpeta donde quieras descargar los emuladores
-3. Descarga los emuladores que necesites con el boton de "Descargar e instalar"
-   (SOLO DISPONIBLE WII, WII U Y 3DS POR EL MOMENTO)
-4. Ejecuta el emulador que quieras pulsando el botón "EJECUTAR"
-5. Disfruta !!
-6. Si no sabes cómo funciona el emulador que desees, busca un video en Youtube que te informe
+El archivo ejecutable `MistikLauncher.exe` no se versiona directamente dentro del repositorio para mantener el historial ligero y seguro.
 
-Cabe destacar que no se adjunta nada que no se pueda distribuir de forma gratuita (NO JUEGOS, NO BIOS)
+Puedes adquirirlo de dos formas:
+
+### Opción A: Descargar desde GitHub Releases (Recomendado)
+1. Ve a la sección de [Releases de este repositorio](https://github.com/jesujaque/mistik-launcher/releases).
+2. Descarga el archivo `MistikLauncher.exe` de la última versión publicada.
+3. Colócalo en la carpeta donde quieras tener tus emuladores.
+
+### Opción B: Compilarlo tú mismo desde el código fuente
+Si prefieres generar el ejecutable por tu cuenta:
+1. Clona el repositorio e instala las dependencias:
+   ```bash
+   pip install customtkinter requests py7zr pillow pyinstaller
+   ```
+2. Compílalo ejecutando:
+   ```bash
+   python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" --icon "assets/icon.ico" --add-data "assets;assets" --collect-all customtkinter mistik-launcher-code.py
+   ```
+3. El archivo `MistikLauncher.exe` generado se encontrará en la carpeta `dist/`.
+
+---
+
+## Cómo usar el launcher:
+
+1. Ejecuta `MistikLauncher.exe` en la carpeta donde quieras almacenar y gestionar los emuladores.
+2. Descarga los emuladores que necesites con el botón **"Descargar e Instalar"**.
+3. Una vez completada la descarga y extracción automática, pulsa **"EJECUTAR"** para abrir el emulador.
+4. ¡Disfruta jugando!
+5. Si no sabes cómo configurar o funciona algún emulador, se recomienda buscar un tutorial o video explicativo en YouTube.
+
+> [!NOTE]
+> Cabe destacar que el proyecto **no incluye ni distribuye juegos ni BIOS** (NO JUEGOS, NO BIOS). Cada usuario debe proveer sus propios archivos por medios legales.
 
 ## ¿Cómo funciona?
 
@@ -67,17 +97,15 @@ Cuando el usuario pulsa el botón **EJECUTAR**, el launcher localiza el ejecutab
 
 El usuario puede desinstalar un emulador con el botón **DESINSTALAR**, lo que elimina la carpeta completa asociada al emulador, dejando el estado de la tarjeta como "no instalado" otra vez.
 
-## Sincronización en la nube ☁️
+## Edición AC (experimental) ⚠️
 
-En su edición "Cloud" (**`mistik-launcher-code-AC-EDITION.py`**), Mistik Launcher incorpora un sistema de **sincronización automática de partidas** para el emulador de Nintendo 3DS (Animal Crossing).
+El archivo **`mistik-launcher-code-AC-EDITION.py`** es una **prueba experimental** que **no forma parte de la versión oficial** del launcher.
 
-El ciclo de sincronización funciona de la siguiente manera:
+Su objetivo era añadir un sistema de **sincronización automática de partidas** para el emulador de Nintendo 3DS (Animal Crossing), pero **actualmente no funciona** y **no se está manteniendo, probando ni teniendo en cuenta** en el desarrollo.
 
-1. **Pull (descarga)**: antes de jugar, el launcher ejecuta `git pull` en la carpeta de guardados para descargar la última partida guardada en la nube.
-2. **Jugar**: lanza el emulador (Azahar) y espera a que el usuario la cierre.
-3. **Push (subida)**: tras cerrar el emulador, el launcher ejecuta `git add`, `git commit` y `git push` para subir la partida recién guardada a la nube.
-
-De esta forma, la partida se guarda automáticamente sin intervención del usuario. Para que este sistema funcione es necesario que Git esté instalado en el sistema y que el directorio de guardados exista (se recomienda jugar una vez al emulador para que se cree la estructura de carpetas).
+- Las pruebas (CI) y la actualización automática de enlaces **ignoran este archivo**.
+- Por ahora el proyecto se centra únicamente en el código oficial (`mistik-launcher-code.py`).
+- Más adelante se retomará esta idea y, si funciona, se implementará directamente en el archivo oficial.
 
 ## Cómo ejecutar desde el código fuente (desarrollo)
 
@@ -109,9 +137,8 @@ python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" -
 
 ```
 mistik-launcher/
-├── MistikLauncher.exe              # Ejecutable final del usuario
-├── mistik-launcher-code.py        # Código fuente de la versión base
-├── mistik-launcher-code-AC-EDITION.py  # Código fuente con sincronización en la nube
+├── mistik-launcher-code.py        # Código fuente oficial
+├── mistik-launcher-code-AC-EDITION.py  # Experimental (no soportado por ahora)
 ├── assets/                         # Imágenes de consolas y recursos
 ├── config/                         # Configuraciones y recursos auxiliares
 ├── CODE_OF_CONDUCT.md              # Código de conducta
@@ -120,6 +147,19 @@ mistik-launcher/
 ├── SECURITY.md                     # Política de seguridad
 └── README.md
 ```
+
+## Actualización automática de enlaces de descarga
+
+El repositorio incluye un **workflow de GitHub Actions** (`update-emulator-links`) que mantiene automáticamente los enlaces de descarga de los emuladores actualizados.
+
+- El workflow se ejecuta de forma **automática** (programada semanalmente) o de forma **manual** (mediante `workflow_dispatch`).
+- Cuando un emulador publica una nueva release, el workflow consulta la última versión disponible y actualiza el enlace en el archivo fuente oficial (`mistik-launcher-code.py`).
+- Si detecta cambios, crea la rama `automation/emulator-links`, hace un commit con el mensaje `ci: actualizar enlaces de descarga de emuladores a la última release` y abre un **Pull Request** contra `develop`.
+- El PR ejecuta CI sobre la rama y **solo se puede mergear cuando el check `validate` está en verde**.
+
+Con esto, cuando los usuarios descarguen una nueva versión del ejecutable `MistikLauncher.exe`, el launcher ya tendrá los enlaces actualizados a las últimas releases de los emuladores.
+
+> Emuladores con enlaces configurados actualmente: **Dolphin**, **Cemu**, **Azahar** y **Eden**.
 
 ## Notas importantes
 
