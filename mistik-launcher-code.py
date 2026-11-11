@@ -230,6 +230,7 @@ class MistikLauncher(ctk.CTk):
             {"console": "Wii U", "emu": "Cemu", "path": "emulators/Cemu/Cemu_2.6/Cemu.exe", "extract_path": "emulators/Cemu", "image": "assets/wiiu.png","url": "https://github.com/cemu-project/Cemu/releases/download/v2.6/cemu-2.6-windows-x64.zip"},
             {"console": "3DS", "emu": "Azahar", "path": "emulators/Azahar/azahar-windows-msvc-2126.2/azahar.exe", "extract_path": "emulators/Azahar", "url":"https://github.com/azahar-emu/azahar/releases/download/2126.2/azahar-windows-msvc-2126.2.zip", "image": "assets/3ds.png"},
             {"console": "Switch", "emu": "Eden", "path": "emulators/Eden/eden.exe", "extract_path": "emulators/Eden", "url": "https://stable.eden-emu.dev/v0.2.1/Eden-Windows-v0.2.1-amd64-msvc-standard.zip", "image": "assets/switch.png"},
+            {"console": "Switch (Online)", "emu": "Ryujinx Nextendo", "path": "emulators/RyujinxNextendo/publish/Ryujinx.exe", "extract_path": "emulators/RyujinxNextendo", "url": "https://git.nextendo.network/NextendoNetwork/Ryujinx-Nextendo/releases/download/v1.10.4/Nextendo-1.10.4-win-x64.zip", "image": "assets/switch.png"},
             {"console": "PS1", "emu": "DuckStation", "path": "emulators/DuckStation/DuckStation.exe","image": "assets/ps1.png"},
             {"console": "PS2", "emu": "PCSX2", "path": "emulators/PCSX2/PCSX2.exe", "image": "assets/ps2.png"},
             {"console": "PSP", "emu": "PPSSPP", "path": "emulators/PPSSPP/PPSSPP.exe", "image": "assets/psp.png"},
