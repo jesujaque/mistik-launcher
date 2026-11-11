@@ -40,17 +40,41 @@ Actualmente el launcher incluye tarjetas para los siguientes emuladores:
 | PlayStation 2 | PCSX2 | 🚧 En desarrollo |
 | PSP | PPSSPP | 🚧 En desarrollo |
 
-## Cómo descargar e instalar:
+## Cómo adquirir y usar el launcher
 
-1. Descarga el archivo "MistikLauncher.exe"
-2. Ejecutalo en la carpeta donde quieras descargar los emuladores
-3. Descarga los emuladores que necesites con el boton de "Descargar e instalar"
-   (SOLO DISPONIBLE WII, WII U, 3DS Y SWITCH POR EL MOMENTO)
-4. Ejecuta el emulador que quieras pulsando el botón "EJECUTAR"
-5. Disfruta !!
-6. Si no sabes cómo funciona el emulador que desees, busca un video en Youtube que te informe
+El archivo ejecutable `MistikLauncher.exe` no se versiona directamente dentro del repositorio para mantener el historial ligero y seguro.
 
-Cabe destacar que no se adjunta nada que no se pueda distribuir de forma gratuita (NO JUEGOS, NO BIOS)
+Puedes adquirirlo de dos formas:
+
+### Opción A: Descargar desde GitHub Releases (Recomendado)
+1. Ve a la sección de [Releases de este repositorio](https://github.com/jesujaque/mistik-launcher/releases).
+2. Descarga el archivo `MistikLauncher.exe` de la última versión publicada.
+3. Colócalo en la carpeta donde quieras tener tus emuladores.
+
+### Opción B: Compilarlo tú mismo desde el código fuente
+Si prefieres generar el ejecutable por tu cuenta:
+1. Clona el repositorio e instala las dependencias:
+   ```bash
+   pip install customtkinter requests py7zr pillow pyinstaller
+   ```
+2. Compílalo ejecutando:
+   ```bash
+   python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" --icon "assets/icon.ico" --add-data "assets;assets" --collect-all customtkinter mistik-launcher-code.py
+   ```
+3. El archivo `MistikLauncher.exe` generado se encontrará en la carpeta `dist/`.
+
+---
+
+## Cómo usar el launcher:
+
+1. Ejecuta `MistikLauncher.exe` en la carpeta donde quieras almacenar y gestionar los emuladores.
+2. Descarga los emuladores que necesites con el botón **"Descargar e Instalar"**.
+3. Una vez completada la descarga y extracción automática, pulsa **"EJECUTAR"** para abrir el emulador.
+4. ¡Disfruta jugando!
+5. Si no sabes cómo configurar o funciona algún emulador, se recomienda buscar un tutorial o video explicativo en YouTube.
+
+> [!NOTE]
+> Cabe destacar que el proyecto **no incluye ni distribuye juegos ni BIOS** (NO JUEGOS, NO BIOS). Cada usuario debe proveer sus propios archivos por medios legales.
 
 ## ¿Cómo funciona?
 
@@ -113,7 +137,6 @@ python -m PyInstaller --noconfirm --onefile --windowed --name "MistikLauncher" -
 
 ```
 mistik-launcher/
-├── MistikLauncher.exe              # Ejecutable final del usuario
 ├── mistik-launcher-code.py        # Código fuente oficial
 ├── mistik-launcher-code-AC-EDITION.py  # Experimental (no soportado por ahora)
 ├── assets/                         # Imágenes de consolas y recursos
