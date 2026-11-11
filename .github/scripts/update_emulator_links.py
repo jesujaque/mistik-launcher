@@ -36,6 +36,10 @@ EMULATORS = [
             f"https://github.com/cemu-project/Cemu/releases/download/{tag}"
             f"/cemu-{tag.lstrip('v')}-windows-x64.zip"
         ),
+        "path_pattern": re.compile(r"emulators/Cemu/Cemu_[^/\s\"]+/Cemu\.exe"),
+        "build_path": lambda tag: (
+            f"emulators/Cemu/Cemu_{tag.lstrip('v')}/Cemu.exe"
+        ),
     },
     {
         "console": "3DS",
@@ -45,11 +49,18 @@ EMULATORS = [
             "mistik-launcher-code.py",
         ],
         "pattern": re.compile(
-            r"https://github\.com/azahar-emu/azahar/releases/download/[^/\s]+/azahar-[^/\s]+\.zip"
+            r"https://github\.com/azahar-emu/azahar/releases/download/[^/\s]+/"
+            r"azahar-(?:[^/\s]+-windows-msvc|windows-msvc-[^/\s]+)\.zip"
         ),
         "build_url": lambda tag: (
             f"https://github.com/azahar-emu/azahar/releases/download/{tag}"
-            f"/{tag}-windows-msvc.zip"
+            f"/azahar-windows-msvc-{tag}.zip"
+        ),
+        "path_pattern": re.compile(
+            r"emulators/Azahar/azahar-[^/\s\"]+/azahar\.exe"
+        ),
+        "build_path": lambda tag: (
+            f"emulators/Azahar/azahar-windows-msvc-{tag}/azahar.exe"
         ),
     },
 ]
@@ -90,15 +101,30 @@ def main() -> None:
                 with open(file_name, "r", encoding="utf-8") as file:
                     content = file.read()
 
-                new_content, replacements = emulator["pattern"].subn(new_url, content)
+                new_content, url_replacements = emulator["pattern"].subn(
+                    new_url, content
+                )
 
-                if replacements > 0 and new_content != content:
+                path_replacements = 0
+                new_path = None
+                if "path_pattern" in emulator and "build_path" in emulator:
+                    new_path = emulator["build_path"](tag)
+                    new_content, path_replacements = emulator["path_pattern"].subn(
+                        new_path, new_content
+                    )
+
+                if (url_replacements > 0 or path_replacements > 0) and new_content != content:
                     with open(file_name, "w", encoding="utf-8") as file:
                         file.write(new_content)
                     print(
                         f"[{emulator['console']}] {emulator['emu']}: "
                         f"enlace actualizado a {new_url}"
                     )
+                    if path_replacements > 0:
+                        print(
+                            f"[{emulator['console']}] {emulator['emu']}: "
+                            f"ruta actualizada a {new_path}"
+                        )
                     updated = True
 
         except Exception as e:

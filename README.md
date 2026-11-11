@@ -130,7 +130,8 @@ El repositorio incluye un **workflow de GitHub Actions** (`update-emulator-links
 
 - El workflow se ejecuta de forma **automática** (programada semanalmente) o de forma **manual** (mediante `workflow_dispatch`).
 - Cuando un emulador publica una nueva release, el workflow consulta la última versión disponible y actualiza el enlace en el archivo fuente oficial (`mistik-launcher-code.py`).
-- Si detecta cambios, hace un commit automático con el mensaje `ci: actualizar enlaces de descarga de emuladores a la última release`.
+- Si detecta cambios, crea la rama `automation/emulator-links`, hace un commit con el mensaje `ci: actualizar enlaces de descarga de emuladores a la última release` y abre un **Pull Request** contra `develop`.
+- El PR ejecuta CI sobre la rama y **solo se puede mergear cuando el check `validate` está en verde**.
 
 Con esto, cuando los usuarios descarguen una nueva versión del ejecutable `MistikLauncher.exe`, el launcher ya tendrá los enlaces actualizados a las últimas releases de los emuladores.
 
