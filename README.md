@@ -35,6 +35,7 @@ Actualmente el launcher incluye tarjetas para los siguientes emuladores:
 | Wii | Dolphin | ✅ Descargable e instalable |
 | Wii U | Cemu | ✅ Descargable e instalable |
 | Nintendo 3DS | Azahar | ✅ Descargable e instalable |
+| Nintendo Switch | Eden | ✅ Descargable e instalable |
 | PlayStation 1 | DuckStation | 🚧 En desarrollo |
 | PlayStation 2 | PCSX2 | 🚧 En desarrollo |
 | PSP | PPSSPP | 🚧 En desarrollo |
@@ -158,7 +159,7 @@ El repositorio incluye un **workflow de GitHub Actions** (`update-emulator-links
 
 Con esto, cuando los usuarios descarguen una nueva versión del ejecutable `MistikLauncher.exe`, el launcher ya tendrá los enlaces actualizados a las últimas releases de los emuladores.
 
-> Emuladores con enlaces configurados actualmente: **Dolphin**, **Cemu** y **Azahar**.
+> Emuladores con enlaces configurados actualmente: **Dolphin**, **Cemu**, **Azahar** y **Eden**.
 
 ## Notas importantes
 

@@ -63,7 +63,31 @@ EMULATORS = [
             f"emulators/Azahar/azahar-windows-msvc-{tag}/azahar.exe"
         ),
     },
+    {
+        "console": "Switch",
+        "emu": "Eden",
+        "api_url": "https://git.eden-emu.dev/api/v1/repos/eden-emu/eden/releases",
+        "files": [
+            "mistik-launcher-code.py",
+        ],
+        "pattern": re.compile(
+            r"https://stable\.eden-emu\.dev/[^/\s]+/Eden-Windows-[^/\s]+-amd64-msvc-standard\.zip"
+        ),
+        "build_url": lambda tag: (
+            f"https://stable.eden-emu.dev/{tag}/Eden-Windows-{tag}-amd64-msvc-standard.zip"
+        ),
+    },
 ]
+
+
+def get_latest_tag_eden(api_url: str) -> str:
+    """Devuelve el tag de la ultima release desde la API de Forgejo/Gitea de Eden."""
+    req = urllib.request.Request(api_url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=15) as response:
+        data = json.loads(response.read().decode("utf-8"))
+    if isinstance(data, list) and len(data) > 0 and data[0].get("tag_name"):
+        return data[0]["tag_name"]
+    raise RuntimeError(f"No se pudo obtener el tag de release desde {api_url}")
 
 
 def get_latest_tag(repo: str) -> str:
@@ -94,7 +118,10 @@ def main() -> None:
 
     for emulator in EMULATORS:
         try:
-            tag = get_latest_tag(emulator["repo"])
+            if "api_url" in emulator:
+                tag = get_latest_tag_eden(emulator["api_url"])
+            else:
+                tag = get_latest_tag(emulator["repo"])
             new_url = emulator["build_url"](tag)
 
             for file_name in emulator["files"]:
