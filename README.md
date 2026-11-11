@@ -1,5 +1,10 @@
 # Mistik Launcher
 
+[![CI](https://github.com/jesujaque/mistik-launcher/actions/workflows/ci.yml/badge.svg)](https://github.com/jesujaque/mistik-launcher/actions/workflows/ci.yml)
+[![Update Emulator Links](https://github.com/jesujaque/mistik-launcher/actions/workflows/update-emulator-links.yml/badge.svg)](https://github.com/jesujaque/mistik-launcher/actions/workflows/update-emulator-links.yml)
+
+**Mistik Launcher** es un launcher de emuladores de videojuegos que centraliza en una única interfaz gráfica el download, la instalación y la ejecución de los emuladores más populares, de forma automática y portable.
+
 ## Sobre el proyecto
 
 **Mistik Launcher** es un proyecto de software que busca reunir los emuladores de los videojuegos más populares en un mismo launcher.
@@ -120,6 +125,18 @@ mistik-launcher/
 ├── SECURITY.md                     # Política de seguridad
 └── README.md
 ```
+
+## Actualización automática de enlaces de descarga
+
+El repositorio incluye un **workflow de GitHub Actions** (`update-emulator-links`) que mantiene automáticamente los enlaces de descarga de los emuladores actualizados.
+
+- El workflow se ejecuta de forma **automática** (programada semanalmente) o de forma **manual** (mediante `workflow_dispatch`).
+- Cuando un emulador publica una nueva release, el workflow consulta la última versión disponible y actualiza el enlace en los archivos fuente (`mistik-launcher-code.py` y `mistik-launcher-code-AC-EDITION.py`).
+- Si detecta cambios, hace un commit automático con el mensaje `ci: actualizar enlaces de descarga de emuladores a la última release`.
+
+Con esto, cuando los usuarios descarguen una nueva versión del ejecutable `MistikLauncher.exe`, el launcher ya tendrá los enlaces actualizados a las últimas releases de los emuladores.
+
+> Emuladores con enlaces configurados actualmente: **Dolphin**, **Cemu** y **Azahar**.
 
 ## Notas importantes
 
