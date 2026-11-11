@@ -54,5 +54,11 @@ jobs:
               --body "Actualización automática de los enlaces de descarga de los emuladores a la última release. Solo se mergea si pasa el check validate de CI."
           fi
 
+          # Habilita el auto-merge en el repositorio para poder usarlo en el PR.
+          gh api -X PATCH "repos/$(gh repo view --json nameWithOwner --jq .nameWithOwner)" -F allow_auto_merge=true
+
+          # Auto-merge: el PR se mergea solo (squash) cuando el check `validate` de CI esté en verde.
+          gh pr merge "$branch" --auto --squash
+
           # Los PR creados con GITHUB_TOKEN no disparan workflows: lanzamos CI sobre la rama.
           gh workflow run ci.yml --ref "$branch"
